@@ -136,10 +136,10 @@ SOFTWARE.
 
 ## Checkbox
 
-[ ] - Install dependencies.
+[x] - Install dependencies.
 [ ] - Configure Server.
-    [ ] - Configure .env
-    [ ] - Make connection to MongoDb.
+    [x] - Configure .env
+    [x] - Make connection to MongoDb.
     [ ] - Make models.
     [ ] - Make auth/passport.
     [ ] - Make middlewares.
