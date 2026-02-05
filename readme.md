@@ -140,7 +140,10 @@ SOFTWARE.
 [ ] - Configure Server.
     [x] - Configure .env
     [x] - Make connection to MongoDb.
-    [ ] - Make models.
+    [x] - Make models.
+        [x] - Users
+        [x] - Carts
+        [ ] - extras (Opcional)
     [ ] - Make auth/passport.
     [ ] - Make middlewares.
     [ ] - Make routing.
