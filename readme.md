@@ -150,8 +150,8 @@ SOFTWARE.
         [x] - Auth
         [x] - Policies
     [ ] - Make routing.
-        [x] - Make "home" GET that explains possible Endpoints.
-        [ ] - Make "Register" POST
+        [x] - Make "home" GET that explains possible Endpoints. -> Changed to Custom Router
+        [x] - Make "Register" POST
         [ ] - Make "login" POST
         [ ] - Make "current" GET that gives information about the logged user
         [ ] - Make "logout" POST that erases the cookie
