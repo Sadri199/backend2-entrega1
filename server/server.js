@@ -6,6 +6,9 @@ import passport from 'passport'
 
 import env, {checkEnv} from '../config/env.config.js'
 import {dbConnection} from '../config/db/connect.config.js'
+import { initPassport } from '../config/auth/passport.config.js'
+import logger from '../middleware/logger.middleware.js'
+import { initRouting } from '../routes/main.router.js'
 
 
 const app = express()
@@ -14,6 +17,7 @@ const SECRET_SESSION = env.SECRET_SESSION
 
 app.use(express.json())
 app.use(cookieParser(SECRET_SESSION))
+app.use(logger)
 
 export const initServer = async () => {
 
@@ -37,6 +41,9 @@ export const initServer = async () => {
             }
         })
     )
+
+    initPassport()
+    initRouting(app)
 
     app.listen(PORT, () => console.log(`💻 Server running at http://localhost:${PORT} !!`))
 }

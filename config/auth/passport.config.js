@@ -11,7 +11,7 @@ function cookieExtractor(req) {
     if (req && req.cookies && req.cookies.access_token) {
         return req.cookies.access_token;
     }
-    return null;
+    return null
 }
 
 export function initPassport () {

@@ -144,10 +144,16 @@ SOFTWARE.
         [x] - Users
         [x] - Carts
         [ ] - extras (Opcional)
-    [ ] - Make auth/passport.
-    [ ] - Make middlewares.
+    [x] - Make auth/passport.
+    [x] - Make middlewares.
+        [x] - Logger
+        [x] - Auth
+        [x] - Policies
     [ ] - Make routing.
-        [ ] - Make "home" GET that explains possible Endpoints.
+        [x] - Make "home" GET that explains possible Endpoints.
         [ ] - Make "Register" POST
+        [ ] - Make "login" POST
+        [ ] - Make "current" GET that gives information about the logged user
+        [ ] - Make "logout" POST that erases the cookie
 
 [ ] - Test API.
