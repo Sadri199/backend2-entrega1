@@ -10,6 +10,7 @@ export default class UserRouter {
         this.router = Router(),
         this.router.get("/", this.getHome)
         this.router.post("/register", this.register)
+        this.router.post("/login", this.login)
     }
 
     makeURL (req) {
@@ -63,6 +64,30 @@ export default class UserRouter {
                 }
             })
         } catch (err) {
+            res.status(500).json({error: err.message})
+        }
+    }
+
+    async login (req, res){
+        try{
+            const {email, password} = req.body
+            if(!email || !password){
+                return res.status(400).json({error: "Missing Credentials!",
+                    requiredFields: ["email", "password"]
+                })
+            }
+
+            const user = await User.findOne({email})
+            if(!user){
+                return res.status(400).json({error: "Invalid Credentials! Please validate the email or password you are using to login."})
+            }
+
+            const checkPassword = await bcrypt.compare(password, user.password)
+            if(!checkPassword) 
+                return res.status(400).json({error: "Invalid Credentials! Please validate the email or password you are using to login."})
+
+            //me quede acá
+        } catch (err){
             res.status(500).json({error: err.message})
         }
     }
