@@ -137,7 +137,7 @@ SOFTWARE.
 ## Checkbox
 
 [x] - Install dependencies.
-[ ] - Configure Server.
+[x] - Configure Server.
     [x] - Configure .env
     [x] - Make connection to MongoDb.
     [x] - Make models.
@@ -156,6 +156,6 @@ SOFTWARE.
         [x] - Make "login" POST
         [x] - Make "current" GET that gives information about the logged user
             [x] - Populate and return user and cart in response
-        [ ] - Make "logout" POST that erases the cookie (Opcional)
+        [x] - Make "logout" POST that erases the cookie (Opcional)
 
-[ ] - Test API.
+[x] - Test API.

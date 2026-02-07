@@ -19,6 +19,7 @@ export default class UserRouter {
         this.router.post("/register", this.register)
         this.router.post("/login", checkLogged, this.login)
         this.router.get("/current", checkJWTCookie, checkRoles("user", "admin"), this.getCurrentUser)
+        this.router.post("/logout", checkJWTCookie, this.logout)
     }
 
     getHome = (req, res) => {
@@ -110,7 +111,8 @@ export default class UserRouter {
 
             res.status(200).json({message: `Credentials confirmed for callsign: ${user.first_name+" "+user.last_name}! You have logged in successfully!`,
             token: "Check your cookies for the token!",
-            availableEndpoints: path.replace("login", "current")})
+            availableEndpoints: [path.replace("login", "current"), 
+                path.replace("login", "logout")]})
         } catch (err){
             res.status(500).json({error: err.message})
         }
@@ -131,21 +133,29 @@ export default class UserRouter {
             })
 
             const {first_name, last_name, email, age, role} = user
-            const {products} = cart
 
             if(user.role == "admin"){
                 const {first_name, last_name, email, age, role, _id, createdAt, updatedAt} = user
                 return res.status(200).json({message: `Callsign: ${first_name+" "+last_name} you have been given Administrative Access, validate your information with discretion!`,
                 superUser: {first_name, last_name, email, age, role, _id, createdAt, updatedAt},
-                cart: {products}})
-                // endpoint logout
+                cart: {products: cart?.products},
+                availableEndpoints: path.replace("login", "logout")})
             }
 
             res.status(200).json({message: `Callsign: ${first_name+" "+last_name} this is your information!`,
             userData: {first_name, last_name, email, age, role},
-            cart: {products}})
-            // endpoint logout
+            cart: {products: cart?.products},
+            availableEndpoints: path.replace("login", "logout")})
         } catch (err) {
+            res.status(500).json({error: err.message})
+        }
+    }
+
+    async logout (req, res){
+        try{
+            res.clearCookie('access_token', { path: '/' });
+            res.status(202).json({ message: "Mercenary logout, thank you for visiting ALLMIND. ALLMIND exists for all Mercenaries!" })
+        } catch (err){
             res.status(500).json({error: err.message})
         }
     }
