@@ -1,8 +1,12 @@
 import { Router } from "express"
 import bcrypt from "bcrypt"
+import jwt from 'jsonwebtoken'
 
 import env from "../../config/env.config.js"
 import { User } from "../../config/models/user.model.js"
+import { checkLogged } from "../../middleware/auth.middleware.js"
+
+const jwtSecret = env.JWT_SECRET
 
 
 export default class UserRouter {
@@ -10,7 +14,7 @@ export default class UserRouter {
         this.router = Router(),
         this.router.get("/", this.getHome)
         this.router.post("/register", this.register)
-        this.router.post("/login", this.login)
+        this.router.post("/login", checkLogged, this.login)
     }
 
     makeURL (req) {
@@ -86,7 +90,19 @@ export default class UserRouter {
             if(!checkPassword) 
                 return res.status(400).json({error: "Invalid Credentials! Please validate the email or password you are using to login."})
 
-            //me quede acá
+            const payload = {id: String(user._id), email: user.email, role: user.role}
+            const token = jwt.sign(payload, jwtSecret, {expiresIn: "1h"})
+
+            res.cookie("access_token", token, {
+                httpOnly: true,
+                sameSite: "lax",
+                secure: false,
+                maxAge: 60 * 60 * 1000,
+                path: "/"
+            })
+
+            res.status(200).json({message: `Credentials confirmed for callsign: ${user.first_name+" "+user.last_name}! You have logged in successfully!`,
+            token: "Check your cookies for the token!"})
         } catch (err){
             res.status(500).json({error: err.message})
         }
