@@ -136,28 +136,46 @@ SOFTWARE.
 
 ---
 
-## Checkbox
+## Checkbox Entrega Final Día D => 13/3 (Quedan 10 días)
 
-[x] - Install dependencies.
-[x] - Configure Server.
-    [x] - Configure .env
-    [x] - Make connection to MongoDb.
-    [x] - Make models.
-        [x] - Users
-        [x] - Carts
-        [ ] - extras (Opcional)
-    [x] - Make auth/passport.
-    [x] - Make middlewares.
-        [x] - Logger
-        [x] - Auth
-        [x] - Policies
-    [x] - Make routing.
-        [x] - Make "home" GET that explains possible Endpoints. -> Changed to Custom Router
-        [x] - Make "Register" POST
-            [x] - Create cart at the same time than user
-        [x] - Make "login" POST
-        [x] - Make "current" GET that gives information about the logged user
-            [x] - Populate and return user and cart in response
-        [x] - Make "logout" POST that erases the cookie (Opcional)
+[ ] - Agregar Correciones Entrega 1
 
-[x] - Test API.
+    [x] - campo email tenga un formato válido y asegurarte de que la propiedad email sea única
+    [ ] - más de detalle en el manejo de roles y permisos. Permitir una mejor diferenciación de acceso entre los diferentes roles (user, admin, etc.). 
+    [ ] - validación de expiración del token y validación de su renovación (jwt.verify(token, secret)) (podría ser un middleware)
+    [ ] - manejar de manera clara las respuestas ante diferentes tipos de errores, como la expiración del token 
+
+[ ] - Agregar consigna entrega 2
+
+    [ ] - Repository Pattern
+        [ ] - DAO
+                [x] - DAO base   
+                [ ] - DAO Users   
+                [ ] - DAO Carts?
+                [ ] - DAO Orders / Tickets
+        [ ] - DTO
+                [ ] - DTO Users   
+                [ ] - DTO Carts?
+                [ ] - DTO Orders / Tickets
+    [ ] - Ruta Current, Middleware de Auth por policies
+        [ ] - Admin, CRUD de catálogo
+        [ ] - Users 
+            [ ] - DTO con información simple (algo había armado ya)
+            [ ] - Post con creación y confirmación de orden
+        [ ] - Password recovery
+            [ ] - Instalar y Configurar Nodemailer
+            [ ] - Enviar Mail para cambiar.
+            [ ] - Link con una hora de vigencia 
+            [ ] - No permitir poner la misma contraseña
+    [ ] - Modelo Ticket
+        [ ] - información de la orden
+        [ ] - Valida el stock de los productos, descuenta y modifica el campo active
+        [ ] - Crea ordenes, luego hay que completarlas o dejarlas incompletas dependiendo del stock de los productos
+    [ ] - Arquitectura.
+        [ ] - Controller
+        [ ] - Repository
+        [ ] - DTO y DAO
+        [ ] - Templates de mail
+    [ ] - Incluir .env
+
+[ ] - Test API.

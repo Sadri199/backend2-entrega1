@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import isEmail from 'validator/lib/isEmail'
 
 const userSchema = new mongoose.Schema({
     first_name: {
@@ -14,7 +15,8 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
         trim: true,
-        lowercase: true
+        lowercase: true,
+        validate: [ isEmail, 'Invalid email format!' ]
     },
     age: {
         type: Number,

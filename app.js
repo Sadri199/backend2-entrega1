@@ -1,3 +1,3 @@
-import { initServer } from "./server/server.js"
+import { initServer } from "./src/server/server.js"
 
 await initServer()

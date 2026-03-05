@@ -26,12 +26,4 @@ export function checkEnv() {
     }
 }
 
-// export function publicEnv(){
-//     return {
-//         NODE_ENV: env.NODE_ENV,
-//         PORT: env.PORT,
-//         MONGO_TARGET: env.MONGO_TARGET
-//     }
-// }
-
 export default env
