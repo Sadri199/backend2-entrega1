@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import env from "../../config/env.config.js"
 import { User } from "../../config/models/user.model.js"
 import { Cart } from "../../config/models/cart.model.js"
+import { userController } from "../../controllers/user.controller.js"
 import { checkLogged, checkJWTCookie } from "../../middleware/auth.middleware.js"
 import { checkRoles } from "../../middleware/policies.middleware.js"
 
@@ -16,7 +17,7 @@ export default class UserRouter {
     constructor() {
         this.router = Router(),
         this.router.get("/", this.getHome)
-        this.router.post("/register", this.register)
+        this.router.post("/register", userController.register)
         this.router.post("/login", checkLogged, this.login)
         this.router.get("/current", checkJWTCookie, checkRoles("user", "admin"), this.getCurrentUser)
         this.router.post("/logout", checkJWTCookie, this.logout)
@@ -36,45 +37,45 @@ export default class UserRouter {
         }
     }
 
-    async register (req, res) {
-        try{
-            const host = req.hostname
-            const url = req.originalUrl
-            const path = `http://${host}:${port}${url}`
+    // async register (req, res) {
+    //     try{
+    //         const host = req.hostname
+    //         const url = req.originalUrl
+    //         const path = `http://${host}:${port}${url}`
 
-            const {first_name, last_name, email, age, password, role} = req.body
-            if(!first_name || !last_name || !email || !password){
-                return res.status(400).json({error: "One or more mandatory values are missing!",
-                    mandatoryFields: ["first_name", "last_name", "email", "password"],
-                    optionalFields: ["age"]
-                })}
+    //         const {first_name, last_name, email, age, password, role} = req.body
+    //         if(!first_name || !last_name || !email || !password){
+    //             return res.status(400).json({error: "One or more mandatory values are missing!",
+    //                 mandatoryFields: ["first_name", "last_name", "email", "password"],
+    //                 optionalFields: ["age"]
+    //             })}
 
-            const emailCheck = await User.findOne({email})
-            if (emailCheck)
-                return res.status(400).json({error: `The email ${email} is already registered, try with a new one!`})
+    //         const emailCheck = await User.findOne({email})
+    //         if (emailCheck)
+    //             return res.status(400).json({error: `The email ${email} is already registered, try with a new one!`})
 
-            const hash = bcrypt.hashSync(password,10)
-            const user = new User({first_name, last_name, email, password:hash, age, role})
-            await user.save()
+    //         const hash = bcrypt.hashSync(password,10)
+    //         const user = new User({first_name, last_name, email, password:hash, age, role})
+    //         await user.save()
 
-            const cart = new Cart ({products: [], user: user._id})
-            await cart.save()
+    //         const cart = new Cart ({products: [], user: user._id})
+    //         await cart.save()
 
-            res.status(201).json({message: "Mercenary registered correctly!",
-                user: {
-                    first_name,
-                    last_name,
-                    callsign: first_name + " " + last_name,
-                    email,
-                    age,
-                    role
-                },
-                availableEndpoints: path.replace("register", "login")
-            })
-        } catch (err) {
-            res.status(500).json({error: err.message})
-        }
-    }
+    //         res.status(201).json({message: "Mercenary registered correctly!",
+    //             user: {
+    //                 first_name,
+    //                 last_name,
+    //                 callsign: first_name + " " + last_name,
+    //                 email,
+    //                 age,
+    //                 role
+    //             },
+    //             availableEndpoints: path.replace("register", "login")
+    //         })
+    //     } catch (err) {
+    //         res.status(500).json({error: err.message})
+    //     }
+    // }
 
     async login (req, res){
         try{

@@ -136,7 +136,7 @@ SOFTWARE.
 
 ---
 
-## Checkbox Entrega Final Día D => 13/3 (Quedan 10 días)
+## Checkbox Entrega Final Día D => 13/3 (Quedan 9 días)
 
 [ ] - Agregar Correciones Entrega 1
 
@@ -150,12 +150,12 @@ SOFTWARE.
     [ ] - Repository Pattern
         [ ] - DAO
                 [x] - DAO base   
-                [ ] - DAO Users   
-                [ ] - DAO Carts?
+                [x] - DAO Users   
+                [x] - DAO Carts
                 [ ] - DAO Orders / Tickets
         [ ] - DTO
                 [ ] - DTO Users   
-                [ ] - DTO Carts?
+                [x] - DTO Carts?
                 [ ] - DTO Orders / Tickets
     [ ] - Ruta Current, Middleware de Auth por policies
         [ ] - Admin, CRUD de catálogo
