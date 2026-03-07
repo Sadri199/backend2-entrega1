@@ -136,46 +136,54 @@ SOFTWARE.
 
 ---
 
-## Checkbox Entrega Final Día D => 13/3 (Quedan 9 días)
+## Checkbox Entrega Final Día D => 13/3 (Quedan 8 días)
 
 [ ] - Agregar Correciones Entrega 1
 
     [x] - campo email tenga un formato válido y asegurarte de que la propiedad email sea única
     [ ] - más de detalle en el manejo de roles y permisos. Permitir una mejor diferenciación de acceso entre los diferentes roles (user, admin, etc.). 
-    [ ] - validación de expiración del token y validación de su renovación (jwt.verify(token, secret)) (podría ser un middleware)
-    [ ] - manejar de manera clara las respuestas ante diferentes tipos de errores, como la expiración del token 
+    [x] - validación de expiración del token y validación de su renovación (jwt.verify(token, secret)) (podría ser un middleware)
+    [x] - manejar de manera clara las respuestas ante diferentes tipos de errores, como la expiración del token 
 
 [ ] - Agregar consigna entrega 2
 
-    [ ] - Repository Pattern
+    [ ] - Repository Pattern Arquitectura
+        [ ] - Controllers
+        [ ] - Services
+        [ ] - Templates de mail
         [ ] - DAO
                 [x] - DAO base   
                 [x] - DAO Users   
                 [x] - DAO Carts
                 [ ] - DAO Orders / Tickets
         [ ] - DTO
-                [ ] - DTO Users   
+                [x] - DTO Users   
                 [x] - DTO Carts?
                 [ ] - DTO Orders / Tickets
     [ ] - Ruta Current, Middleware de Auth por policies
-        [ ] - Admin, CRUD de catálogo
-        [ ] - Users 
-            [ ] - DTO con información simple (algo había armado ya)
-            [ ] - Post con creación y confirmación de orden
+        [x] - Users Cambio de Router a Controller / Service para cada Endpoint
+            [x] - Register
+            [x] - Login
+            [x] - Current
+            [x] - Logout
+            [x] - DTO con información simple (algo había armado ya)
         [ ] - Password recovery
-            [ ] - Instalar y Configurar Nodemailer
-            [ ] - Enviar Mail para cambiar.
+            [x] - Instalar y Configurar Nodemailer
+            [ ] - Enviar Mail para cambiar. https://blog.logrocket.com/implementing-secure-password-reset-node-js/
             [ ] - Link con una hora de vigencia 
             [ ] - No permitir poner la misma contraseña
-    [ ] - Modelo Ticket
+    [ ] - Modelo Ticket, Middleware de Auth por policies
+        [ ] - Admin, CRUD de catálogo
+            [ ] - Modelo Products
+            [ ] - Dao Products
+            [ ] - DTo Products
+            [ ] - Service Products
+            [ ] - Controller Products
+            [ ] - Router Products
         [ ] - información de la orden
         [ ] - Valida el stock de los productos, descuenta y modifica el campo active
         [ ] - Crea ordenes, luego hay que completarlas o dejarlas incompletas dependiendo del stock de los productos
-    [ ] - Arquitectura.
-        [ ] - Controller
-        [ ] - Repository
-        [ ] - DTO y DAO
-        [ ] - Templates de mail
+        [ ] - Post con creación y confirmación de orden 
     [ ] - Incluir .env
 
 [ ] - Test API.

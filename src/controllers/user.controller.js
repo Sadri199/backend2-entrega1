@@ -1,10 +1,7 @@
-import jwt from 'jsonwebtoken'
-
 import { userService } from "../services/user.service.js"
 import { cartService } from '../services/cart.service.js'
 import env from "../config/env.config.js"
 
-const jwtSecret = env.JWT_SECRET
 const port = env.PORT
 
 class UserController {
@@ -44,25 +41,8 @@ class UserController {
             const host = req.hostname
             const url = req.originalUrl
             const path = `http://${host}:${port}${url}`
-            
-            const {email, password} = req.body  //primera parte
-            if(!email || !password){
-                return res.status(400).json({error: "Missing Credentials!",
-                    requiredFields: ["email", "password"]
-                })
-            }
 
-            const user = await User.findOne({email}) //segunda parte
-            if(!user){
-                return res.status(400).json({error: "Invalid Credentials! Please validate the email or password you are using to login."})
-            }
-
-            const checkPassword = await bcrypt.compare(password, user.password) //tercera parte
-            if(!checkPassword) 
-                return res.status(400).json({error: "Invalid Credentials! Please validate the email or password you are using to login."})
-
-            const payload = {id: String(user._id), email: user.email, role: user.role} //validacion y creación token, parte final
-            const token = jwt.sign(payload, jwtSecret, {expiresIn: "1h"}) 
+            const {token, filtered} = await userService.login(req.body)
 
             res.cookie("access_token", token, {
                 httpOnly: true,
@@ -72,7 +52,7 @@ class UserController {
                 path: "/"
             })
 
-            res.status(200).json({message: `Credentials confirmed for callsign: ${user.first_name+" "+user.last_name}! You have logged in successfully!`,
+            res.status(200).json({message: `Credentials confirmed for callsign: ${filtered.callsign}! You have logged in successfully!`,
             token: "Check your cookies for the token!",
             availableEndpoints: [path.replace("login", "current"), 
                 path.replace("login", "logout")]})
@@ -80,6 +60,53 @@ class UserController {
             res.status(500).json({error: err.message})
         }
     }
+
+    async getCurrentUser (req, res){
+            try{
+                const host = req.hostname
+                const url = req.originalUrl
+                const path = `http://${host}:${port}${url}`
+    
+                const user = await userService.getUser(req.user)
+    
+                const {cart, filter} = user
+    
+                if(filter.role == "admin"){
+                    return res.status(200).json({message: `Callsign: ${filter.callsign} you have been given Administrative Access, validate your information with discretion!`,
+                    adminData: {first_name: filter.first_name,
+                        last_name: filter.last_name, 
+                        email: filter.email,
+                        age: filter.age,
+                        role: filter.role,
+                        _id: filter._id, 
+                        createdAt: filter.createdAt, 
+                        updatedAt: filter.updatedAt},
+                    cart: {products: cart?.products},
+                    availableEndpoints: path.replace("current", "logout")})
+                }
+    
+                res.status(200).json({message: `Callsign: ${filter.callsign} this is your information!`,
+                userData: {first_name: filter.first_name,
+                        last_name: filter.last_name, 
+                        email: filter.email,
+                        age: filter.age,
+                        role: filter.role},
+                cart: {products: cart?.products},
+                availableEndpoints: path.replace("current", "logout")})
+            } catch (err) {
+                res.status(500).json({error: err.message})
+            }
+    }
+
+    async logout (req, res){
+        try{
+            res.clearCookie('access_token', { path: '/' })
+            res.status(202).json({ message: "Mercenary logout, thank you for visiting ALLMIND. ALLMIND exists for all Mercenaries!" })
+        } catch (err){
+            res.status(500).json({error: err.message})
+        }
+    }
 }
+
 
 export const userController = new UserController()

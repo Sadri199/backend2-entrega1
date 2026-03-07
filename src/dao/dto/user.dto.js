@@ -18,12 +18,30 @@ export function checkEmail(body){
     return {email}
 }
 
-export function checkLogin(body){
-    //acá tiene que validar si ingresaron credenciales
+export function checkPassword(body){
+    const {password} = body ?? {}
+    if(!password){
+        throw new Error("Password is required!")
+    }
+    return password
+}
+
+export function getUserById(body){
+    const {_id} = body ?? {}
+    if(!_id){
+        throw new Error ("Invalid ID!")
+    }
+    return {_id}
 }
 
 export function dataFilter(body){
     const {first_name, last_name, email, age, role} = body ?? {}
     const callsign = first_name + " " + last_name
     return {first_name, last_name, callsign, email, age, role}
+}
+
+export function dataFilterAdmin(body){
+    const {first_name, last_name, email, age, role, _id, createdAt, updatedAt} = body ?? {}
+    const callsign = first_name + " " + last_name
+    return {first_name, last_name, callsign, email, age, role, _id, createdAt, updatedAt}
 }
