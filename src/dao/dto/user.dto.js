@@ -34,6 +34,14 @@ export function getUserById(body){
     return {_id}
 }
 
+export function addTemporalToken(body){
+    const {token, expiryDate} = body ?? {}
+    if(!token || !expiryDate){
+        throw new Error ("Token or ExpiryDate are missing!")
+    }
+    return {token, expiryDate}
+}
+
 export function dataFilter(body){
     const {first_name, last_name, email, age, role} = body ?? {}
     const callsign = first_name + " " + last_name

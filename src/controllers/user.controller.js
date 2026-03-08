@@ -1,5 +1,6 @@
 import { userService } from "../services/user.service.js"
 import { cartService } from '../services/cart.service.js'
+import { mailerService } from "../services/mailer.service.js"
 import env from "../config/env.config.js"
 
 const port = env.PORT
@@ -19,8 +20,14 @@ class UserController {
             const cart = await cartService.cartCreate(user)
             const resBody = userService.filterData(user)
 
+            const email = mailerService.send({
+                to:user.email, 
+                subject: `Allmind: Thank you for joining us ${resBody.callsign}!`,
+                template: "welcome", 
+                context: {name: resBody.callsign || "User"}
+            })
             res.status(201).json({
-                message: "Mercenary registered correctly!",
+                message: "Mercenary registered correctly! An email confirming your registration will arrive shortly.",
                 user: {
                     first_name: resBody.first_name,
                     last_name: resBody.last_name,
@@ -96,6 +103,28 @@ class UserController {
             } catch (err) {
                 res.status(500).json({error: err.message})
             }
+    }
+
+    async requestReset (req, res){
+        try{
+            const host = req.hostname
+            const url = req.originalUrl
+            const path = `http://${host}:${port}${url}`
+            const body = req.body
+
+            const reset = await userService.requestReset(body, path)
+            const email = mailerService.send({
+                to: req.body.email, 
+                subject: `Allmind: ${reset.callsign} reset your password!`,
+                template: "requestReset", 
+                context: {callsign: resBody.callsign || "User",
+                    link: reset.link
+                }
+            })
+            res.status(200).json({message: `We will send you an email with a link to reset your password!`})
+        } catch (err) {
+            res.status(500).json({error: err.message})
+        }
     }
 
     async logout (req, res){

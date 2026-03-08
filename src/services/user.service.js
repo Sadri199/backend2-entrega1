@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken'
+import crypto from "crypto"
 
 import { UserDAO } from "../dao/user.dao.js"
 import { CartDAO } from "../dao/cart.dao.js"
@@ -8,7 +9,8 @@ import { createUser,
     dataFilter, 
     checkPassword, 
     getUserById, 
-    dataFilterAdmin } from "../dao/dto/user.dto.js"
+    dataFilterAdmin, 
+    addTemporalToken} from "../dao/dto/user.dto.js"
 import { getOrCreateCart } from "../dao/dto/cart.dto.js"
 import env from "../config/env.config.js"
 
@@ -57,6 +59,37 @@ class UserService{
             const filter = dataFilter(user)
             return {cart, filter}
         }
+    }
+
+    async requestReset(data, path){
+        const user = await this.dao.findOne(checkEmail(data))
+        if(!user){
+                return res.status(400).json({error: "Invalid email! Please validate that the email is registered."}) //las res en controller, aca solo throw new error, cambiar todo
+            }
+        const {_id, callsign} = user
+        const resetToken = crypto.randomBytes(32).toString("hex")
+        const lifeSpan = 60*60*1000
+        const createdAt = Date.now()
+        const expiryDate = createdAt + lifeSpan
+        
+        
+        const token = await bcrypt.hash(resetToken, 10)
+        const temporalToken = {
+            token,
+            expiryDate
+        }
+        const saveTemporalToken = await this.dao.findByIdAndUpdate({_id}, addTemporalToken(temporalToken))
+        if(!saveTemporalToken){
+            console.log("fallo el update del token temporal")
+            return res.status(500).json({error: "There was a problem generating the temporal token!"})
+        }
+        
+        const link = `${path}/passwordReset?token=${token}&id=${_id}`
+        return {callsign, link}
+    }
+
+    async resetPassword(data){
+
     }
 }
 

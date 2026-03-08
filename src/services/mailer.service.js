@@ -1,4 +1,11 @@
 import nodemailer from "nodemailer"
+import fs from 'fs/promises'
+import path from 'path'
+import Handlebars from 'handlebars'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 import env from "../config/env.config.js"
 
@@ -20,12 +27,30 @@ function buildTransport (){
     })
 }
 
-export async function sendEmail() {
-    const info = await buildTransport().sendMail({
-    from: SMTP_USER,
-    to: "adrsa_15@hotmail.com",
-    subject: "Hello ✔",
-    html: "<b>Hello world?</b>", // HTML version of the message
-  })
-  console.log("mail envaido") //funciona, ahora hay que armar algo para templates o lo que sea
+async function renderTemplate(name, data) {
+    const folder = path.join(__dirname, "../views/emails")
+    const filePath = path.join(folder, `${name}.handlebars`)
+    if(!filePath){
+        throw new Error ("Email Template doesn't exists with that name!")
+    }
+    const source = await fs.readFile(filePath, "utf-8")
+    const template = Handlebars.compile(source)
+    return template(data || {})
 }
+
+export class MailerService{
+    async send ({to, subject, template, context = {}}){
+        if(!to || !subject || !template) throw new Error("Mandatory fields missing!")
+        const transport = buildTransport()
+        const html = await renderTemplate(template, context)
+        const info = await transport.sendMail({
+            from: SMTP_FROM || SMTP_USER,
+            to,
+            subject,
+            html
+        })
+        return {messageId: info.messageId, accepted: info.accepted, rejected:info.rejected}
+    }
+}
+
+export const mailerService = new MailerService()

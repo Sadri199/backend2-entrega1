@@ -136,7 +136,7 @@ SOFTWARE.
 
 ---
 
-## Checkbox Entrega Final Día D => 13/3 (Quedan 8 días)
+## Checkbox Entrega Final Día D => 13/3 (Quedan 7 días)
 
 [ ] - Agregar Correciones Entrega 1
 
@@ -163,6 +163,7 @@ SOFTWARE.
     [ ] - Ruta Current, Middleware de Auth por policies
         [x] - Users Cambio de Router a Controller / Service para cada Endpoint
             [x] - Register
+            [x] - Enviar email al registrarse
             [x] - Login
             [x] - Current
             [x] - Logout
