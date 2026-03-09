@@ -57,6 +57,14 @@ export const initServer = async () => {
 
     initPassport()
     initRouting(app)
+    
+    process.on('unhandledRejection', (reason) => {
+        console.error('[process] Unhandled Rejection ', reason);
+    });
+
+    process.on('uncaughtException', (err) => {
+        console.error('[process] Uncaught Exception ', err);
+    });
 
     app.listen(PORT, () => console.log(`💻 Server running at http://localhost:${PORT} !!`))
 }

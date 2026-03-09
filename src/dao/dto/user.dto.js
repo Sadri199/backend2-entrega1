@@ -34,22 +34,42 @@ export function getUserById(body){
     return {_id}
 }
 
-export function addTemporalToken(body){
+export function temporalToken(body){
     const {token, expiryDate} = body ?? {}
     if(!token || !expiryDate){
         throw new Error ("Token or ExpiryDate are missing!")
     }
-    return {token, expiryDate}
+    const filtered = {resetToken:{
+        token,
+        expiryDate
+    }}
+    return filtered
 }
 
 export function dataFilter(body){
-    const {first_name, last_name, email, age, role} = body ?? {}
+    const {first_name, last_name, email, age, role, _id, password} = body ?? {}
     const callsign = first_name + " " + last_name
-    return {first_name, last_name, callsign, email, age, role}
+    return {first_name, last_name, callsign, email, age, role, _id, password}
 }
 
 export function dataFilterAdmin(body){
     const {first_name, last_name, email, age, role, _id, createdAt, updatedAt} = body ?? {}
     const callsign = first_name + " " + last_name
     return {first_name, last_name, callsign, email, age, role, _id, createdAt, updatedAt}
+}
+
+export function resetPasswordData(body){
+    const {first_name, last_name, _id, password, resetToken, email} = body ?? {}
+    if(!_id)
+        throw new Error ("UserID missing.")
+    
+    const callsign = first_name + " " + last_name
+    return {_id, password, resetToken, email, callsign}
+}
+
+export function formatPassword(body){
+    const {newPassword} = body ?? {}
+    const hash = bcrypt.hashSync(String(newPassword), 10)
+    return {$set: {password: hash},
+        $unset: {resetToken: null}}
 }

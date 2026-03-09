@@ -15,6 +15,7 @@ export default class UserRouter {
         this.router.post("/register", checkLogged, userController.register)
         this.router.post("/login", checkLogged, userController.login)
         this.router.post("/reset-password", checkLogged, userController.requestReset)
+        this.router.put("/newPassword", checkLogged, userController.resetPassword)
         this.router.get("/current", checkTokenExpiration, checkJWTCookie, checkRoles("user", "admin"), userController.getCurrentUser)
         this.router.post("/logout", checkTokenExpiration, checkJWTCookie, userController.logout)
     }

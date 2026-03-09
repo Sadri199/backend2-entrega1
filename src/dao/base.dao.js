@@ -12,10 +12,11 @@ export class BaseDAO {
         if (options.select) query.select(options.select)
         return await query.lean()
     }
-    async findByIdAndUpdate(dto) {
-        return await this.model.findByIdAndUpdate(dto.id, dto.data, {
+    async findByIdAndUpdate(id, dto) {
+        return await this.model.findByIdAndUpdate(id, dto, {
             new:true,
-            runValidators: true
+            runValidators: true,
+            upsert: true
         }).lean()
     }
     async findByIdAndDelete (dto) {return await this.model.findByIdAndDelete(dto).lean()}

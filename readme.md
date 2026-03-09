@@ -136,7 +136,7 @@ SOFTWARE.
 
 ---
 
-## Checkbox Entrega Final Día D => 13/3 (Quedan 7 días)
+## Checkbox Entrega Final Día D => 13/3 (Quedan 6 días)
 
 [ ] - Agregar Correciones Entrega 1
 
@@ -149,18 +149,32 @@ SOFTWARE.
 
     [ ] - Repository Pattern Arquitectura
         [ ] - Controllers
+            [x] - User
+            [ ] - Products
+            [ ] - Order
         [ ] - Services
+            [x] - User
+            [x] - Cart
+            [x] - Mailer
+            [ ] - Products
+            [ ] - Order
         [ ] - Templates de mail
+                [x] - Welcome
+                [x] - Reset Password
+                [x] - Reset Confirm
+                [ ] - Order Created
         [ ] - DAO
                 [x] - DAO base   
                 [x] - DAO Users   
                 [x] - DAO Carts
+                [ ] - DAO Products
                 [ ] - DAO Orders / Tickets
         [ ] - DTO
                 [x] - DTO Users   
-                [x] - DTO Carts?
+                [x] - DTO Carts
+                [ ] - DTO Products
                 [ ] - DTO Orders / Tickets
-    [ ] - Ruta Current, Middleware de Auth por policies
+    [x] - Ruta Current, Middleware de Auth por policies
         [x] - Users Cambio de Router a Controller / Service para cada Endpoint
             [x] - Register
             [x] - Enviar email al registrarse
@@ -168,23 +182,23 @@ SOFTWARE.
             [x] - Current
             [x] - Logout
             [x] - DTO con información simple (algo había armado ya)
-        [ ] - Password recovery
+        [x] - Password recovery
             [x] - Instalar y Configurar Nodemailer
-            [ ] - Enviar Mail para cambiar. https://blog.logrocket.com/implementing-secure-password-reset-node-js/
-            [ ] - Link con una hora de vigencia 
-            [ ] - No permitir poner la misma contraseña
+            [x] - Enviar Mail para cambiar. https://blog.logrocket.com/implementing-secure-password-reset-node-js/
+            [x] - Link con una hora de vigencia 
+            [x] - No permitir poner la misma contraseña
+            [x] - editar el hash guardado en la db
     [ ] - Modelo Ticket, Middleware de Auth por policies
-        [ ] - Admin, CRUD de catálogo
-            [ ] - Modelo Products
-            [ ] - Dao Products
-            [ ] - DTo Products
-            [ ] - Service Products
-            [ ] - Controller Products
+        [ ] - Admin, CRUD de catálogo, User Read Catálogo
+            [x] - Modelo Products
             [ ] - Router Products
-        [ ] - información de la orden
+                [ ] - Create (Admin)
+                [ ] - GetAll (User) (Admin)
+                [ ] - Update (Admin)
+                [ ] - Delete (Admin)
+        [ ] - Creación de Order, información de la orden
         [ ] - Valida el stock de los productos, descuenta y modifica el campo active
-        [ ] - Crea ordenes, luego hay que completarlas o dejarlas incompletas dependiendo del stock de los productos
-        [ ] - Post con creación y confirmación de orden 
+        [ ] - Confirmación de order, luego hay que completarlas o dejarlas incompletas dependiendo del stock de los productos
     [ ] - Incluir .env
 
 [ ] - Test API.

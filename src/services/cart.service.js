@@ -5,7 +5,7 @@ class CartService{
     constructor (dao = new CartDAO()) {this.dao = dao}
 
     async cartCreate(data) {return await this.dao.create(getOrCreateCart(data))}
-
+    async cartFind(data) {return await this.dao.findById(getOrCreateCart(data))}
 }
 
 export const cartService = new CartService()
