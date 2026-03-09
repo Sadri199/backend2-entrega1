@@ -136,7 +136,7 @@ SOFTWARE.
 
 ---
 
-## Checkbox Entrega Final Día D => 13/3 (Quedan 6 días)
+## Checkbox Entrega Final Día D => 13/3 (Quedan 5 días)
 
 [ ] - Agregar Correciones Entrega 1
 
