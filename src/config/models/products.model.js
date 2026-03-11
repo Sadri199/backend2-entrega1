@@ -1,7 +1,5 @@
 import mongoose from "mongoose"
 
-// https://www.slingacademy.com/article/how-to-create-auto-incrementing-field-in-mongoose/
-
 const productSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -14,8 +12,8 @@ const productSchema = new mongoose.Schema({
     },
     code: {
         type: String,
-        required: true,
-        unique: true
+        unique: true,
+        required: true
     },
     price: {
         type: Number,
@@ -34,6 +32,7 @@ const productSchema = new mongoose.Schema({
     category: {
         type: String,
         default: "Parts",
+        enum: ["Parts", "Food", "Misc."],
         required: true
     },
     thumbnail: {

@@ -12,21 +12,27 @@ export const checkJWTCookie = (req, res, next) => {
         details: info?.message
     })
     req.user = user
-    next()
-    })(req, res, next)
-} 
-
-export function checkTokenExpiration(req, res, next){ //It looks like it doesn't do anything
     const token = req.cookies.access_token
     try {
     const verify = jwt.verify(token, jwtSecret)
-    console.log(verify)
     } catch (err) {
     if (err.name === 'TokenExpiredError') {
         return res.status(401).json({error: "Your token has expired, please login again!"})
     }}
     next()
-}
+    })(req, res, next)
+} 
+
+// export function checkTokenExpiration(req, res, next){ //It looks like it doesn't do anything
+//     const token = req.cookies.access_token
+//     try {
+//     const verify = jwt.verify(token, jwtSecret)
+//     } catch (err) {
+//     if (err.name === 'TokenExpiredError') {
+//         return res.status(401).json({error: "Your token has expired, please login again!"})
+//     }}
+//     next()
+// }
 
 export function checkLogged(req, res, next) {
     if (req.cookies.access_token) {

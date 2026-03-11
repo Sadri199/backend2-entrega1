@@ -2,7 +2,7 @@ import { Router } from "express"
 
 import env from "../../config/env.config.js"
 import { userController } from "../../controllers/user.controller.js"
-import { checkLogged, checkJWTCookie, checkTokenExpiration} from "../../middleware/auth.middleware.js"
+import { checkLogged, checkJWTCookie} from "../../middleware/auth.middleware.js"
 import { checkRoles } from "../../middleware/policies.middleware.js"
 
 const port = env.PORT
@@ -16,8 +16,8 @@ export default class UserRouter {
         this.router.post("/login", checkLogged, userController.login)
         this.router.post("/reset-password", checkLogged, userController.requestReset)
         this.router.put("/newPassword", checkLogged, userController.resetPassword)
-        this.router.get("/current", checkTokenExpiration, checkJWTCookie, checkRoles("user", "admin"), userController.getCurrentUser)
-        this.router.post("/logout", checkTokenExpiration, checkJWTCookie, userController.logout)
+        this.router.get("/current", checkJWTCookie, checkRoles("user", "admin"), userController.getCurrentUser)
+        this.router.post("/logout", checkJWTCookie, userController.logout)
     }
 
     getHome = (req, res) => {

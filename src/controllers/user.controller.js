@@ -90,8 +90,8 @@ class UserController {
             const host = req.hostname
             const url = req.originalUrl
             const path = `http://${host}:${port}${url}`
-            
-            const user = await userService.emailCheck(req.body)
+
+            const user = await userService.emailCheck(req.user)
             if (!user){
                 return res.status(404).json({error: "User not found in Database! Check your token and login again!"})
             }

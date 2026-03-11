@@ -136,7 +136,7 @@ SOFTWARE.
 
 ---
 
-## Checkbox Entrega Final Día D => 13/3 (Quedan 5 días)
+## Checkbox Entrega Final Día D => 13/3 (Quedan 4 días)
 
 [ ] - Agregar Correciones Entrega 1
 
@@ -150,13 +150,13 @@ SOFTWARE.
     [ ] - Repository Pattern Arquitectura
         [ ] - Controllers
             [x] - User
-            [ ] - Products
+            [x] - Products
             [ ] - Order
         [ ] - Services
             [x] - User
             [x] - Cart
             [x] - Mailer
-            [ ] - Products
+            [x] - Products
             [ ] - Order
         [ ] - Templates de mail
                 [x] - Welcome
@@ -167,12 +167,12 @@ SOFTWARE.
                 [x] - DAO base   
                 [x] - DAO Users   
                 [x] - DAO Carts
-                [ ] - DAO Products
+                [x] - DAO Products
                 [ ] - DAO Orders / Tickets
         [ ] - DTO
                 [x] - DTO Users   
                 [x] - DTO Carts
-                [ ] - DTO Products
+                [x] - DTO Products
                 [ ] - DTO Orders / Tickets
     [x] - Ruta Current, Middleware de Auth por policies
         [x] - Users Cambio de Router a Controller / Service para cada Endpoint
@@ -189,16 +189,21 @@ SOFTWARE.
             [x] - No permitir poner la misma contraseña
             [x] - editar el hash guardado en la db
     [ ] - Modelo Ticket, Middleware de Auth por policies
-        [ ] - Admin, CRUD de catálogo, User Read Catálogo
+        [x] - Admin, CRUD de catálogo, User Read Catálogo
             [x] - Modelo Products
-            [ ] - Router Products
-                [ ] - Create (Admin)
-                [ ] - GetAll (User) (Admin)
-                [ ] - Update (Admin)
-                [ ] - Delete (Admin)
-        [ ] - Creación de Order, información de la orden
-        [ ] - Valida el stock de los productos, descuenta y modifica el campo active
-        [ ] - Confirmación de order, luego hay que completarlas o dejarlas incompletas dependiendo del stock de los productos
+            [x] - Router Products
+                [x] - Create (Admin)
+                [x] - GetAll (User) (Admin)
+                [x] - Update (Admin)
+                [x] - Delete (Admin)
+        [x] - Modelo Order
+        [ ] - Router Order
+            [ ] - Create Order, en estado pending (User) (Admin) enviar un mail para confirmar pedido
+            [ ] - Valida el stock de los productos, descuenta y modifica el campo active
+            [ ] - Confirm order (put), completarlas o dejarlas incompletas dependiendo del stock de los productos (User) (Admin) tiene que mandar un mail con detalles de compra
+            [ ] - Ver Order especifica (User validación de que ordenes puede ver findbyid) (Admin sería un getAll / find)
+            [ ] - Ver todas las order (Admin)
+            [ ] - borrar order (Admin)
     [ ] - Incluir .env
 
 [ ] - Test API.
