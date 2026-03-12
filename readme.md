@@ -250,7 +250,7 @@ SOFTWARE.
             [x] - borrar order (Admin) (opcional)
 
 [x] - Test API.
-[ ] - Incluir .env
+[x] - Incluir .env
 
 ---
 
