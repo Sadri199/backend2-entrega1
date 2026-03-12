@@ -39,11 +39,11 @@ export function orderId(body){
 }
 
 export function orderEmail(body){
-    const email = body
-    if(!email){
+    const {clientEmail} = body
+    if(!clientEmail){
         throw new Error ("Email is missing!")
     }
-    return {clientEmail: email}
+    return {clientEmail}
 }
 
 export function filterOrder(body){

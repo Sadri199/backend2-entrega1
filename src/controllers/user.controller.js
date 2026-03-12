@@ -18,8 +18,9 @@ class UserController {
             const path = `http://${host}:${port}${url}`
 
             const emailCheck = await userService.emailCheck(req.body)
-            if (emailCheck)
+            if (emailCheck){
                 return res.status(400).json({ error: `The email ${req.body.email} is already registered, try with a new one!` })
+            }
 
             const user = await userService.userCreate(req.body)
             const cart = await cartService.cartCreate(user)

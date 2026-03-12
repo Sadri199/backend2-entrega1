@@ -17,11 +17,15 @@ class OrderService{
 
     async getOrderByEmail(data) {return await this.dao.getByEmail(orderEmail(data))}
 
+    async getAll(data) {return await this.dao.getAllPaginate(data)}
+
     async updateOrder(id, data) {return await this.dao.findByIdAndUpdate(orderId(id),
     formatUpdate(data))}
 
     async finishOrder(id, data) {return await this.dao.findByIdAndUpdate(orderId(id),
     formatFinish(data))}
+
+    async deleteOrder(data) {return await this.dao.findByIdAndDelete(orderId(data))}
 }
 
 export const orderService = new OrderService()

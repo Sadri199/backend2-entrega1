@@ -13,7 +13,10 @@
     <br>
     <p>Order Code: {{code}}</p>
     <br>
-    <p>Products: {{products}}</p> {{! This doesn't work correctly}}
+    <p>Products:</p>
+        {{#each products}}
+        <p>• {{title}} (Quantity: {{productQuantity}}) - ${{unitPrice}} each</p>
+        {{/each}}
     <br>
     <p>Price: {{totalPrice}}</p>
     <br>

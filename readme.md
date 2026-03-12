@@ -1,4 +1,4 @@
-# Backend 2 -> Entrega 1
+# Backend 2 -> Entrega Final
 
 An API inspired by the videogame Armored Core 6 built with **Node.js** and **Express**, featuring secure user authentication and database integration. This project implements industry-standard security practices including password hashing and token-based authorization.
 
@@ -88,6 +88,48 @@ npm start
 
 > This project follows best practices by never storing plain-text passwords. The `Bcrypt` library salts and hashes passwords before they hit the database, while `JWT` ensures that protected routes remain inaccessible without a valid signature.
 
+## Architecture Diagram
+
+```mermaid
+graph TD
+    A[HTTP Client] -->|Request| B[Express Router]
+    B -->|Route Handler| C[Controllers]
+    C -->|Business Logic| D[Services]
+    D -->|Data Operations| E[DAOs]
+    E -->|Query/Transform| F[DTOs]
+    F -->|Format Data| G[MongoDB]
+    
+    G -->|Result| F
+    F -->|Validated Data| E
+    E -->|Filtered Response| D
+    D -->|Processed Data| C
+    C -->|JSON Response| B
+    B -->|HTTP Response| A
+
+    H[Middleware] -->|Auth Check| B
+    I[Mailer Service] -.->|Email Notifications| C
+
+    style A fill:#2E3440,color:#fff
+    style B fill:#3B4252,color:#fff
+    style C fill:#4C566A,color:#fff
+    style D fill:#5E81AC,color:#fff
+    style E fill:#81A1C1,color:#fff
+    style F fill:#88C0D0,color:#000
+    style G fill:#8FBCBB,color:#000
+    style H fill:#A3BE8C,color:#000
+    style I fill:#D08770,color:#fff
+```
+
+**Flow Description:**
+- **HTTP Client** → **Express Router**: Incoming HTTP requests are routed based on the defined endpoints.
+- **Router** → **Controllers**: Route handlers delegate to appropriate controller methods.
+- **Controllers** → **Services**: Business logic is abstracted in service layer.
+- **Services** → **DAOs**: Data access is handled through Data Access Objects.
+- **DAOs** → **DTOs**: Data Transfer Objects validate and format the information.
+- **DTOs** → **MongoDB**: Final formatted queries/updates are executed against the database.
+- **Middleware**: Authentication checks are applied at the router level.
+- **Mailer Service**: Async email notifications are triggered from controllers when needed.
+
 ---
 
 ## 📄 License
@@ -97,7 +139,7 @@ This project is open-source and available under the **MIT License**.
 ```text
 MIT License
 
-Copyright (c) 2026 Your Name
+Copyright (c) 2026 Adrian Satriani
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -124,7 +166,7 @@ SOFTWARE.
 
 ## 🧾 Credits
 
-- Google Gemini for making this readme.md (I'm sorry, I will never have the patience to fully learn Markdown ╰（‵□′）╯ ).
+- Google Gemini and Claude for making this readme.md (I'm sorry, I will never have the patience to fully learn Markdown ╰（‵□′）╯ ).
 - Character "ALLMIND" featured in this project belongs to Armored Core VI: Fires of Rubicon. All rights belong to FromSoftware and Bandai Namco Entertainment. This is a non-commercial fan project created out of appreciation for the series.
 
 ---
@@ -145,7 +187,7 @@ SOFTWARE.
     [x] - validación de expiración del token y validación de su renovación (jwt.verify(token, secret)) (podría ser un middleware)
     [x] - manejar de manera clara las respuestas ante diferentes tipos de errores, como la expiración del token 
 
-[ ] - Agregar consigna entrega 2
+[x] - Agregar consigna entrega 2
 
     [x] - Repository Pattern Arquitectura
         [x] - Controllers
@@ -203,8 +245,12 @@ SOFTWARE.
             [x] - Valida el stock de los productos, descuenta y modifica el campo active
             [x] - Confirm order (put), completarlas o dejarlas incompletas dependiendo del stock de los productos (User) (Admin) tiene que mandar un mail con detalles de compra
             [x] - Ver Order especifica (User validación de que ordenes puede ver findbyid) (Admin sería un getAll / find)
-            [ ] - Ver todas las order (Admin) (opcional)
-            [ ] - borrar order (Admin) (opcional)
-    [ ] - Incluir .env
+            [x] - (Admin) sería un getAll (opcional)
+            [x] - getByEmail para que el user encuentre todos sus pedidos (opcional)
+            [x] - borrar order (Admin) (opcional)
 
-[ ] - Test API.
+[x] - Test API.
+[ ] - Incluir .env
+
+---
+

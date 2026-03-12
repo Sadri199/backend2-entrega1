@@ -21,6 +21,7 @@ class UserService{
 
     async emailCheck(data) {
         const validate = await this.dao.findOne(checkEmail(data))
+        if(!validate) return null
         return dataFilter(validate)}
 
     async updateTempToken(id, token) {

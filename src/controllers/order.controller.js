@@ -40,13 +40,27 @@ class OrderController {
         }
     }
 
-    async getOrderByEmail(req, res){ //da un body vacio no terminado
+    async getAllOrders(req, res) {
+        try {
+            const page = Number(req.query.page || 1)
+            const limit = Number(req.query.limit || 10)
+            const status = req.query.status
+            const orders = await orderService.getAll({page, limit, status})
+
+            res.status(200).json({orders})
+        } catch (err) {
+            res.status(500).json({ error: err.message })
+        }
+    }
+
+    async getOrderByEmail(req, res){
         try {
             const email = req.params.email
             if(req.user.email !== req.params.email && req.user.role !== "admin"){
                 return res.status(403).json({error: "Users with 'user' role can only search for orders that match their own email."})
             }
-            const order = await orderService.getOrderByEmail(email)
+            const format = {clientEmail: email}
+            const order = await orderService.getOrderByEmail(format)
 
             res.status(200).json({order})
         } catch (err) {
@@ -74,14 +88,17 @@ class OrderController {
             }
 
             const {products} = order
-            const originalStock = products[0].productId.stock
-            const quantity = products[0].productQuantity
-            const realStock = originalStock - quantity
-            if(realStock < 0){
-                return res.status(400).json({error: "'productQuantity' cannot be lower than 'productId.stock'. Order cannot be completed, it will stay in pending."})
-            }
-            products[0].productId.stock = realStock
-            const updateProduct = await productService.updateProduct(products[0].productId)
+            const stockCalc = products.map(async product => {
+                const realStock = product.productId.stock - product.productQuantity
+                if(realStock < 0){
+                    return res.status(400).json({error: "'productQuantity' cannot be lower than 'productId.stock'. Order cannot be completed, it will stay in pending."})
+                }
+                product.productId.stock = realStock
+                const updateProduct = await productService.updateProduct(product.productId)
+                if(!updateProduct){
+                    return res.status(400).json({error: `${product} could not be modified at a product.model level.`})
+                }
+            }) 
 
             order.status = "confirmed"
             const updateOrder = await orderService.finishOrder(_id, order.status)
@@ -100,6 +117,18 @@ class OrderController {
             })
 
             res.status(200).json({updateOrder})
+        } catch (err) {
+            res.status(500).json({ error: err.message })
+        }
+    }
+
+    async deleteOrder(req, res) {
+        try {
+            const _id = req.params.id
+            const order = await orderService.deleteOrder(_id) 
+
+            res.status(200).json({message: `Order ${_id} deleted.`,
+                order})
         } catch (err) {
             res.status(500).json({ error: err.message })
         }
