@@ -136,44 +136,44 @@ SOFTWARE.
 
 ---
 
-## Checkbox Entrega Final Día D => 13/3 (Quedan 4 días)
+## Checkbox Entrega Final Día D => 13/3 (Quedan 2 días)
 
-[ ] - Agregar Correciones Entrega 1
+[x] - Agregar Correciones Entrega 1
 
     [x] - campo email tenga un formato válido y asegurarte de que la propiedad email sea única
-    [ ] - más de detalle en el manejo de roles y permisos. Permitir una mejor diferenciación de acceso entre los diferentes roles (user, admin, etc.). 
+    [x] - más de detalle en el manejo de roles y permisos. Permitir una mejor diferenciación de acceso entre los diferentes roles (user, admin, etc.). 
     [x] - validación de expiración del token y validación de su renovación (jwt.verify(token, secret)) (podría ser un middleware)
     [x] - manejar de manera clara las respuestas ante diferentes tipos de errores, como la expiración del token 
 
 [ ] - Agregar consigna entrega 2
 
-    [ ] - Repository Pattern Arquitectura
-        [ ] - Controllers
+    [x] - Repository Pattern Arquitectura
+        [x] - Controllers
             [x] - User
             [x] - Products
-            [ ] - Order
-        [ ] - Services
+            [x] - Order
+        [x] - Services
             [x] - User
             [x] - Cart
             [x] - Mailer
             [x] - Products
-            [ ] - Order
-        [ ] - Templates de mail
+            [x] - Order
+        [x] - Templates de mail
                 [x] - Welcome
                 [x] - Reset Password
                 [x] - Reset Confirm
-                [ ] - Order Created
-        [ ] - DAO
+                [x] - Order Created
+        [x] - DAO
                 [x] - DAO base   
                 [x] - DAO Users   
                 [x] - DAO Carts
                 [x] - DAO Products
-                [ ] - DAO Orders / Tickets
-        [ ] - DTO
+                [x] - DAO Orders / Tickets
+        [x] - DTO
                 [x] - DTO Users   
                 [x] - DTO Carts
                 [x] - DTO Products
-                [ ] - DTO Orders / Tickets
+                [x] - DTO Orders / Tickets
     [x] - Ruta Current, Middleware de Auth por policies
         [x] - Users Cambio de Router a Controller / Service para cada Endpoint
             [x] - Register
@@ -188,7 +188,7 @@ SOFTWARE.
             [x] - Link con una hora de vigencia 
             [x] - No permitir poner la misma contraseña
             [x] - editar el hash guardado en la db
-    [ ] - Modelo Ticket, Middleware de Auth por policies
+    [x] - Modelo Ticket, Middleware de Auth por policies
         [x] - Admin, CRUD de catálogo, User Read Catálogo
             [x] - Modelo Products
             [x] - Router Products
@@ -197,13 +197,14 @@ SOFTWARE.
                 [x] - Update (Admin)
                 [x] - Delete (Admin)
         [x] - Modelo Order
-        [ ] - Router Order
-            [ ] - Create Order, en estado pending (User) (Admin) enviar un mail para confirmar pedido
-            [ ] - Valida el stock de los productos, descuenta y modifica el campo active
-            [ ] - Confirm order (put), completarlas o dejarlas incompletas dependiendo del stock de los productos (User) (Admin) tiene que mandar un mail con detalles de compra
-            [ ] - Ver Order especifica (User validación de que ordenes puede ver findbyid) (Admin sería un getAll / find)
-            [ ] - Ver todas las order (Admin)
-            [ ] - borrar order (Admin)
+        [x] - Router Order
+            [x] - Create Order, en estado pending (User) (Admin) enviar un mail para confirmar pedido
+            [x] - Update products de la order
+            [x] - Valida el stock de los productos, descuenta y modifica el campo active
+            [x] - Confirm order (put), completarlas o dejarlas incompletas dependiendo del stock de los productos (User) (Admin) tiene que mandar un mail con detalles de compra
+            [x] - Ver Order especifica (User validación de que ordenes puede ver findbyid) (Admin sería un getAll / find)
+            [ ] - Ver todas las order (Admin) (opcional)
+            [ ] - borrar order (Admin) (opcional)
     [ ] - Incluir .env
 
 [ ] - Test API.

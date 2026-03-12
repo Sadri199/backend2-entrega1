@@ -1,6 +1,6 @@
 export function formatCreate(body){
     const {title, description, price, code, status, stock, category, thumbnail} = body ?? {}
-        if (!title || !description || !code || typeof price !== "number" || typeof status !== "boolean" || typeof stock !== "number" || !category){
+        if (!title || !description || !code || typeof status !== "boolean" || typeof stock !== "number" || !category){
             throw new Error ("One or more mandatory values are missing!")
         }
         return {title, description, code, price, status, stock, category, thumbnail}
@@ -15,7 +15,6 @@ export function getId(body){
 }
 
 export function formatUpdate(body){
-    console.log("entro a formatUpdate")
     const {title, description, price, code, status, stock, category, thumbnail} = body ?? {}
     return {title, description, code, price, status, stock, category, thumbnail}
 }

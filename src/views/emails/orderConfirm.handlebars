@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations, your order was confirmed!</title>
+</head>
+<body>
+    <h2>Hello {{clientName}}!</h2>
+    <p>We are sending you this email to notify you about an order that you have completed in our system.</p>
+    <br>
+    <p>Here are the details:</p>
+    <br>
+    <p>Order Code: {{code}}</p>
+    <br>
+    <p>Products: {{products}}</p> {{! This doesn't work correctly}}
+    <br>
+    <p>Price: {{totalPrice}}</p>
+    <br>
+    <p>Order ID: {{_id}}</p>
+    <br>
+    <p>Your order is {{status}}! We will ship it in 6 business years.</p>
+</body>
+</html>

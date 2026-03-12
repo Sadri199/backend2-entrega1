@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You have an order pending for confirmation!</title>
+</head>
+<body>
+    <h2>Hello {{clientName}}!</h2>
+    <p>We are sending you this email to notify you about an order you have placed in our system.</p>
+    <br>
+    <p>Here are the details:</p>
+    <br>
+    <p>Order Code: {{code}}</p>
+    <br>
+    <p>Products: {{products}}</p> {{! This doesn't work correctly}}
+    <br>
+    <p>Price: {{totalPrice}}</p>
+    <br>
+    <p>Order ID: {{_id}}</p>
+    <br>
+    <p>Remember, this order is {{status}}! You need to confirm it through our API before we can ship it.</p>
+</body>
+</html>

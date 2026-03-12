@@ -16,7 +16,8 @@ export class BaseDAO {
         return await this.model.findByIdAndUpdate(id, dto, {
             new:true,
             runValidators: true,
-            upsert: true
+            upsert: true,
+            select: "-__v"
         }).lean()
     }
     async findByIdAndDelete (dto) {return await this.model.findByIdAndDelete(dto).lean()}

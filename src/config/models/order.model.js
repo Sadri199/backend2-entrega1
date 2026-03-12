@@ -3,13 +3,14 @@ import mongoose from "mongoose"
 const orderProductSchema = new mongoose.Schema({
     productId: {type: mongoose.Schema.Types.ObjectId, 
         ref: "Product"},
-    title: {type: mongoose.Schema.Types.String, 
-        ref: "Product"},
+    title: {type: String, 
+        required: true},
     productQuantity: {type: Number, 
         required: true, 
         min: 1},
-    unitPrice: {type: mongoose.Schema.Types.Number, 
-        ref: "Product" }
+    unitPrice: {type: Number, 
+        required: true,
+        min: 1}
 }, {_id: false})
 
 const orderSchema = new mongoose.Schema({

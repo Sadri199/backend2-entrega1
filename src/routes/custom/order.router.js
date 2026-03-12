@@ -12,12 +12,20 @@ export default class OrderRouter {
             checkJWTCookie,
             checkRoles("admin", "user"), 
             orderController.createOrder)
-        // this.router.get("/", checkJWTCookie,
-        //     checkRoles("admin", "user"),
-        //     productController.getProducts)
-        // this.router.put("/", checkJWTCookie,
-        //     checkRoles("admin"),
-        //     productController.updateProduct)
+        this.router.get("/:id", 
+            checkJWTCookie,
+            checkRoles("admin"),
+            orderController.getOrder)
+        this.router.get("/email/:email", 
+            checkJWTCookie,
+            checkRoles("admin","user"),
+            orderController.getOrderByEmail)
+        this.router.put("/:id", checkJWTCookie,
+            checkRoles("admin", "user"),
+            orderController.updateOrder)
+        this.router.put("/confirm/:id", checkJWTCookie,
+            checkRoles("admin", "user"),
+            orderController.confirmOrder)
         // this.router.delete("/", checkJWTCookie,
         //     checkRoles("admin"),
         //     productController.deleteProduct)
